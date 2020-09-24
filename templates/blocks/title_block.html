@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+{% if self.level == "display-1" %}
+<div class="{{self.level}} {% for block in self.style %}{% if block.block_style == 'text_color' %}text-{% elif block.block_style == 'background_color' %}bg-{% endif %}{% include_block block %} {% endfor %}">{{ self.title }}</div>
+{% elif self.level == "display-3" %}
+<div class="{{self.level}} {% for block in self.style %}{% if block.block_style == 'text_color' %}text-{% elif block.block_style == 'background_color' %}bg-{% endif %}{% include_block block %} {% endfor %}">{{ self.title }}</div>
+{% else %}
+<{{ self.level }} class="{% for block in self.style %}{% if block.block_style == 'text_color' %}text-{% elif block.block_style == 'background_color' %}bg-{% endif %}{% include_block block %} {% endfor %}">{{ self.title }}</{{ self.level }}>
+{% endif %}

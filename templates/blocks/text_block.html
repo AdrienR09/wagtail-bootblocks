@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+<div class="{% for item in self.items %}{% if item.block_type == 'style' %}{% include_block item %}{% endif %}{% endfor %}">
+{% for item in self.items %}
+    {% if item.block_type != 'style' %}
+    {% include_block item %}
+    {% endif %}
+{% endfor %}
+</div>

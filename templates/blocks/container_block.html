@@ -1,0 +1,8 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% image self.background fill-1200x600 as img %}
+<div class="{{ self.container_type }} {% for block in self.style %}{% if block.block_type != 'extra_dimension' %}{% include_block block %}{% endif %} {% endfor %}"
+     style="background-image:url('{{ img.url }}');background-size:cover;{% for block in self.style %}{% if block.block_type == 'extra_dimension' %}{% include_block block %}{% endif %} {% endfor %}">
+{% for block in self.content %}
+{% include_block block %}
+{% endfor %}
+</div>

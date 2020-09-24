@@ -1,0 +1,5 @@
+{% load wagtailcore_tags %}
+<blockquote class="blockquote {% for block in self.style %}{% if block.block_style == 'text_color' %}text-{% elif block.block_style == 'background_color' %}bg-{% endif %}{% include_block block %} {% endfor %}">
+  <p>{{ self.quote }}</p>
+  <footer class="blockquote-footer"><cite title="Source Title">{{ self.author }}</cite></footer>
+</blockquote>
