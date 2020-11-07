@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block extra_css %}
+{% if self.theme_label %}
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/{{ self.theme_label }}/bootstrap.min.css">
+{% endif %}
+{% for block in self.extra_theme %}
+    {% include_block block %}
+{% endfor %}
+{% endblock %}
+
+
+{% block body %}
+{% for block in self.body %}
+  {% include_block block %}
+{% endfor %}
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+$(function () {
+  $('.carousel').carousel()
+})
+</script>
+{% for block in self.extra_js %}
+<script>
+  {% include_block block %}
+</script>
+{% endfor %}
+{% endblock %}

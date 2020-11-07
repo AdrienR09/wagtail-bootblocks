@@ -1,0 +1,46 @@
+{% load wagtailcore_tags %}
+{% if self.type == "breadcrumb" %}
+<ol class="breadcrumb {% for block in self.style %}{% include_block block %} {% endfor %}">
+    {% for block in self.nav %}
+    {% if block.value.page.url == page.url %}
+  <li class="breadcrumb-item active">
+      {{ block.value.content }}
+  </li>
+    {% else %}
+  <li class="breadcrumb-item">
+      {% include_block block %}
+  </li>
+    {% endif %}
+    {% endfor %}
+</ol>
+{% elif self.type == "pagination" %}
+<ul class="pagination {% for block in self.style %}{% include_block block %} {% endfor %}">
+        <li class="page-item disabled">
+      <a class="page-link" href="#">&laquo;</a>
+    </li>
+    {% for block in self.nav %}
+  <li class="page-item">
+      {% if block.value.page.url == page.url %}
+      {% include_block block with class="page-link active" %}
+      {% else %}
+      {% include_block block with class="page-link" %}
+      {% endif %}
+  </li>
+    {% endfor %}
+        <li class="page-item">
+    <a class="page-link" href="#">&raquo;</a>
+    </li>
+</ul>
+{% else %}
+<ul class="{{ self.type }} {% for block in self.style %}{% include_block block %} {% endfor %}">
+    {% for block in self.nav %}
+  <li class="nav-item {% if block.block_type == 'dropdown' %}dropdown{% endif %}">
+      {% if block.value.page.url == page.url %}
+      {% include_block block with class="nav-link active" %}
+      {% else %}
+      {% include_block block with class="nav-link" %}
+      {% endif %}
+  </li>
+    {% endfor %}
+</ul>
+{% endif %}

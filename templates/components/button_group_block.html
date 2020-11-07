@@ -1,0 +1,10 @@
+{% load wagtailcore_tags %}
+<div {{ param }} class="{{ class }} {{ self.type }} {% for block in self.style %}{% include_block block %} {% endfor %}" role="group" {% if self.group == "btn-group btn-group-toggle" %}data-toggle="buttons"{% endif %}>
+    {% for block in self.content %}
+    {% if self.type.value == "btn-group btn-group-toggle" %}{{ self.type.value }}
+      {% include_block block with toggle="type='checkbox' checked='' autocomplete='off'"%}
+    {% else %}
+    {% include_block block %}
+    {% endif %}
+    {% endfor %}
+</div>

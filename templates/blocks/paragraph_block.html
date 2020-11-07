@@ -1,4 +1,0 @@
-{% load wagtailcore_tags %}
-<div class="{% for block in self.style %}{% if block.block_style == 'text_color' %}text-{% elif block.block_style == 'background_color' %}bg-{% endif %}{% include_block block %} {% endfor %}">
-{{ self.text }}
-</div>

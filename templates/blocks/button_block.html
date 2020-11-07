@@ -1,6 +1,0 @@
-{% load wagtailcore_tags %}
-<button type="button" class="btn
-{% for block in self.style %}{% if block.block_type == 'button_color' %}btn-{% include_block block %}{% endif %}
-{% if block.block_type == 'button_outlined' %}btn-outline-{% include_block block %}{% endif %}
-{% if block.block_type == 'button_disabled' %}disabled{% endif %}
-{% if block.block_type == 'text_color' %}text-{% include_block block %}{% endif %} {% endfor %}" onclick="window.location.href='{{ url }}';">{{self.label}}</button>

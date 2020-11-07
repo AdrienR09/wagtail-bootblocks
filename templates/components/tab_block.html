@@ -1,0 +1,19 @@
+{% load wagtailcore_tags %}
+<ul {{ param }} class="nav nav-tabs {{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}">
+    {% for block in self.nav %}
+    {% if block.block_type == "tab" %}
+    <li class="nav-item {% if forloop.counter == 1 %}active {% endif %}">
+        <a class="nav-link {% if forloop.counter == 1 %}active {% endif %}" data-toggle="tab" href="#tab-{{ forloop.counter }}">{% include_block block.value.label %}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+<div class="tab-content">
+{% for block in self.nav %}
+  <div class="tab-pane fade {% if forloop.counter == 1 %}show active {% endif %}" id="tab-{{ forloop.counter }}">
+      {% for sub_block in block.value.content %}
+      {{ sub_block }}
+      {% endfor %}
+  </div>
+{% endfor %}
+</div>

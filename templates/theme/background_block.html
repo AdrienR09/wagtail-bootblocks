@@ -1,0 +1,9 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% image self.image fill-2000x2000 as img %}
+<style>
+body{
+  background-color: {{ self.color }};
+  background-image: url("{{ img.url }}");
+  background-size : cover;
+}
+</style>

@@ -1,0 +1,13 @@
+{% load wagtailcore_tags %}
+<div class="btn-group" role="group">
+  {% include_block self.button with class="dropdown-toggle" param="data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'" %}
+  <div class="dropdown-menu">
+  {% for block in self.nav %}
+    {% if block.block_type == "divider" %}
+    <div class="dropdown-divider"></div>
+    {% else %}
+    {% include_block block with class="dropdown-item" %}
+    {% endif %}
+  {% endfor %}
+  </div>
+</div>

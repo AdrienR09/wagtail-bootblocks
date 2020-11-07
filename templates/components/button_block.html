@@ -1,0 +1,2 @@
+{% load wagtailcore_tags %}
+<button type="button" {{ param }} class="btn {{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}" {% if url %} onclick="window.location.href='{{ url }}';" {% endif %}{% if self.tooltip %} data-toggle="tooltip" data-placement="{{ self.tooltip.placement }}" title="{{ self.tooltip.title }}" data-original-title="{{ self.tooltip.title }}"{% endif %}>{% for block in self.content %}{% include_block block %}{% endfor %}</button>

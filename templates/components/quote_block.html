@@ -1,0 +1,5 @@
+{% load wagtailcore_tags %}
+<blockquote {{ params }} class="{{ class }} blockquote {% for block in self.style %}{% include_block block %} {% endfor %}">
+  {{ self.quote }}
+  <footer class="blockquote-footer"><cite title="Source Title">{{ self.author }}</cite></footer>
+</blockquote>

@@ -1,0 +1,28 @@
+{% load wagtailcore_tags %}
+<div id="carousel{{ self.id }}" class="carousel slide {% for block in self.style %}{% include_block block %} {% endfor %}" data-ride="carousel"
+     data-interval={% if self.cycle != 0 %}{{ self.cycle }}{% else %} false {% endif %}>
+  {% if self.display_indicators %}
+  <ol class="carousel-indicators">
+    {% for block in self.content %}
+    <li data-target="#carouselExampleCaptions" data-slide-to="{{ forloop.counter0 }}" {% if forloop.counter == 1 %} class="active" {% endif %}></li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+  <div class="carousel-inner">
+    {% for block in self.content %}
+    <div class="carousel-item {% if forloop.counter == 1 %}active {% endif %}">
+      {% include_block block %}
+    </div>
+    {% endfor %}
+  </div>
+  {% if self.display_controls %}
+  <a class="carousel-control-prev" href="#carousel{{ self.id }}" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carousel{{ self.id }}" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  {% endif %}
+</div>

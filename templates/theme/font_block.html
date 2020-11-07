@@ -1,0 +1,14 @@
+<link href='http://fonts.googleapis.com/css?family={{ self.font }}' rel='stylesheet' type='text/css'>
+{% if self.name == 'default' %}
+<style>
+body {
+  font-family: '{{ self.font }}', sans-serif !important;
+}
+</style>
+{% else %}
+<style>
+body .{{ self.name}}{
+  font-family: '{{ self.font }}', sans-serif !important;
+}
+</style>
+{% endif %}

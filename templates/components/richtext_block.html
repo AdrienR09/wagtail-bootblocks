@@ -1,0 +1,4 @@
+{% load wagtailcore_tags %}
+<div {{ params }} class="{{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}">
+{% include_block self.text %}
+</div>

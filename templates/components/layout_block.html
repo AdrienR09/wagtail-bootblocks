@@ -1,0 +1,11 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% image self.background max-1700x1700 as img%}
+
+<div class="{{ self.container_type }} {% for block in self.style %}{% include_block block %} {% endfor %}"
+style="{% if self.background %}background-image:url('{{ img.url }}');background-size:cover;{% endif %}
+{% if self.dimensions %}{% include_block self.dimensions %}{% endif %}">
+  {% for block in self.content %}
+  {% include_block block %}
+  {% endfor %}
+</div>

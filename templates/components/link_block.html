@@ -1,0 +1,6 @@
+{% load wagtailcore_tags %}
+<a {{ param }} class="{{ class }}" href= "{% if self.url %}{{ self.url }}{% else %}{{ ref }}{% endif %}">
+    {% for block in self.content %}
+    {% include_block block with class='' %}
+    {% endfor %}
+</a>{% if url == page.url %}<span class="sr-only">(current)</span>{% endif %}
