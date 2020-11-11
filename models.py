@@ -11,7 +11,7 @@ from wagtail.admin.edit_handlers import TabbedInterface, ObjectList
 
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.core.blocks import StreamBlock, RawHTMLBlock
-from bootblocks import theme, blocks
+from bootblocks import theme, blocks, effects
 
 class BlockPage(Page):
     """
@@ -22,13 +22,6 @@ class BlockPage(Page):
     template = "page/block_page.html"
 
     theme_label = models.CharField(max_length=20, choices=theme.theme_choices, null=True, blank=True)
-    logo = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        related_name="+",
-        on_delete=models.SET_NULL,
-    )
     extra_theme = StreamField(
         [
             ("font", theme.FontBlock(closed=True)),
@@ -53,6 +46,7 @@ class BlockPage(Page):
     extra_js = StreamField(
         [
             ("script", RawHTMLBlock(closed=True)),
+            ("particles", effects.ParticlesBlock(closed=True)),
         ],
         null=True,
         blank=True,
@@ -60,7 +54,6 @@ class BlockPage(Page):
 
     theme_panels = Page.content_panels + [
         FieldPanel("theme_label"),
-        FieldPanel("logo"),
         FieldPanel("extra_theme"),
     ]
 

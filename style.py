@@ -493,6 +493,123 @@ class AddClassBlock(blocks.StructBlock):
         icon = "code"
         template = "style/add_class_block.html"
 
+class AnimationBlock(blocks.StructBlock):
+
+    animation = blocks.ChoiceBlock(choices=[
+        ("bounce","bounce"),
+        ("flash","flash"),
+        ("pulse","pulse"),
+        ("rubberBand","rubberBand"),
+        ("shakeX","shakeX"),
+        ("shakeY","shakeY"),
+        ("headShake","headShake"),
+        ("swing","swing"),
+        ("tada","tada"),
+        ("wobble","wobble"),
+        ("jello","jello"),
+        ("heartBeat","heartBeat"),
+        ("backInDown","backInDown"),
+        ("backInLeft","backInLeft"),
+        ("backInRight","backInRight"),
+        ("backInUp","backInUp"),
+        ("backOutDown","backOutDown"),
+        ("backOutLeft","backOutLeft"),
+        ("backOutRight","backOutRight"),
+        ("backOutUp","backOutUp"),
+        ("bounceIn","bounceIn"),
+        ("bounceInDown","bounceInDown"),
+        ("bounceInLeft","bounceInLeft"),
+        ("bounceInRight","bounceInRight"),
+        ("bounceInUp","bounceInUp"),
+        ("bounceOut","bounceOut"),
+        ("bounceOutDown","bounceOutDown"),
+        ("bounceOutLeft","bounceOutLeft"),
+        ("bounceOutRight","bounceOutRight"),
+        ("bounceOutUp","bounceOutUp"),
+        ("fadeIn","fadeIn"),
+        ("fadeInDown","fadeInDown"),
+        ("fadeInDownBig","fadeInDownBig"),
+        ("fadeInLeft","fadeInLeft"),
+        ("fadeInLeftBig","fadeInLeftBig"),
+        ("fadeInRight","fadeInRight"),
+        ("fadeInRightBig","fadeInRightBig"),
+        ("fadeInUp","fadeInUp"),
+        ("fadeInUpBig","fadeInUpBig"),
+        ("fadeInTopLeft","fadeInTopLeft"),
+        ("fadeInTopRight","fadeInTopRight"),
+        ("fadeInBottomLeft","fadeInBottomLeft"),
+        ("fadeInBottomRight","fadeInBottomRight"),
+        ("fadeOut","fadeOut"),
+        ("fadeOutDown","fadeOutDown"),
+        ("fadeOutDownBig","fadeOutDownBig"),
+        ("fadeOutLeft","fadeOutLeft"),
+        ("fadeOutLeftBig","fadeOutLeftBig"),
+        ("fadeOutRight","fadeOutRight"),
+        ("fadeOutRightBig","fadeOutRightBig"),
+        ("fadeOutUp","fadeOutUp"),
+        ("fadeOutUpBig","fadeOutUpBig"),
+        ("fadeOutTopLeft","fadeOutTopLeft"),
+        ("fadeOutTopRight","fadeOutTopRight"),
+        ("fadeOutBottomRight","fadeOutBottomRight"),
+        ("fadeOutBottomLeft","fadeOutBottomLeft"),
+        ("flip","flip"),
+        ("flipInX","flipInX"),
+        ("flipInY","flipInY"),
+        ("flipOutX","flipOutX"),
+        ("flipOutY","flipOutY"),
+        ("lightSpeedInRight","lightSpeedInRight"),
+        ("lightSpeedInLeft","lightSpeedInLeft"),
+        ("lightSpeedOutRight","lightSpeedOutRight"),
+        ("lightSpeedOutLeft","lightSpeedOutLeft"),
+        ("rotateIn","rotateIn"),
+        ("rotateInDownLeft","rotateInDownLeft"),
+        ("rotateInDownRight","rotateInDownRight"),
+        ("rotateInUpLeft","rotateInUpLeft"),
+        ("rotateInUpRight","rotateInUpRight"),
+        ("rotateOut","rotateOut"),
+        ("rotateOutDownLeft","rotateOutDownLeft"),
+        ("rotateOutDownRight","rotateOutDownRight"),
+        ("rotateOutUpLeft","rotateOutUpLeft"),
+        ("rotateOutUpRight","rotateOutUpRight"),
+        ("hinge","hinge"),
+        ("jackInTheBox","jackInTheBox"),
+        ("rollIn","rollIn"),
+        ("rollOut","rollOut"),
+        ("zoomIn","zoomIn"),
+        ("zoomInDown","zoomInDown"),
+        ("zoomInLeft","zoomInLeft"),
+        ("zoomInRight","zoomInRight"),
+        ("zoomInUp","zoomInUp"),
+        ("zoomOut" ,"zoomOut"),
+        ("zoomOutDown" ,"zoomOutDown"),
+        ("zoomOutLeft" ,"zoomOutLeft"),
+        ("zoomOutRight" ,"zoomOutRight"),
+        ("zoomOutUp" ,"zoomOutUp"),
+        ("slideInDown" ,"slideInDown"),
+        ("slideInLeft" ,"slideInLeft"),
+        ("slideInRight" ,"slideInRight"),
+        ("slideInUp" ,"slideInUp"),
+        ("slideOutDown" ,"slideOutDown"),
+        ("slideOutLeft" ,"slideOutLeft"),
+        ("slideOutRight" ,"slideOutRight"),
+        ("slideOutUp" ,"slideOutUp"),
+        ], required=True, closed=True)
+    delay = blocks.IntegerBlock(min_value=2, max_value=5, required=False, closed=True)
+    speed = blocks.ChoiceBlock(choices=[
+        ("slow", "slow"),
+        ("slower", "slower"),
+        ("fast", "fast"),
+        ("faster", "faster")], required=False, closed=True)
+    repeat = blocks.ChoiceBlock(choices=[
+        ("repeat-1", "1"),
+        ("repeat-2", "2"),
+        ("repeat-3", "3"),
+        ("infinite", "infinite")], required=False, closed=True)
+
+    class Meta:
+        template = "style/animation_block.html"
+
+
 # Style blocks :
 
 class LayoutStyleBlock(blocks.StreamBlock):
@@ -515,6 +632,7 @@ class LayoutStyleBlock(blocks.StreamBlock):
 
     # Extra :
     add_class = AddClassBlock(required=False, closed=True)
+    animation = AnimationBlock(required=False, closed=True)
 
 class NavbarStyleBlock(blocks.StreamBlock):
 
@@ -537,6 +655,7 @@ class NavbarStyleBlock(blocks.StreamBlock):
 
     # Extra :
     add_class = AddClassBlock(required=False, closed=True)
+    animation = AnimationBlock(required=False, closed=True)
 
 class TextStyleBlock(blocks.StreamBlock):
 
@@ -564,6 +683,7 @@ class TextStyleBlock(blocks.StreamBlock):
     padding = PaddingBlock(required=False, closed=True)
 
     add_class = AddClassBlock(required=False, closed=True)
+    animation = AnimationBlock(required=False, closed=True)
 
     class Meta:
         icon = "pilcrow"
@@ -586,6 +706,7 @@ class ButtonStyleBlock(blocks.StreamBlock):
     padding = PaddingBlock(required=False, closed=True)
     horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
     vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
+    animation = AnimationBlock(required=False, closed=True)
 
 class CarouselStyleBlock(blocks.StreamBlock):
 
@@ -599,6 +720,7 @@ class CarouselStyleBlock(blocks.StreamBlock):
     height = SizeHeightChooserBlock(required=False, closed=True)
     margin = MarginBlock(required=False, closed=True)
     padding = PaddingBlock(required=False, closed=True)
+    animation = AnimationBlock(required=False, closed=True)
 
 class ImageStyleBlock(blocks.StreamBlock):
 
@@ -614,6 +736,7 @@ class ImageStyleBlock(blocks.StreamBlock):
     border = BorderBlock(required=False, closed=True)
     margin = MarginBlock(required=False, closed=True)
     padding = PaddingBlock(required=False, closed=True)
+    animation = AnimationBlock(required=False, closed=True)
 
 class NavStyleBlock(blocks.StreamBlock):
 
@@ -631,3 +754,4 @@ class NavStyleBlock(blocks.StreamBlock):
     border = BorderBlock(required=False, closed=True)
     margin = MarginBlock(required=False, closed=True)
     padding = PaddingBlock(required=False, closed=True)
+    animation = AnimationBlock(required=False, closed=True)

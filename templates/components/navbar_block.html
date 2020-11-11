@@ -1,9 +1,10 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags %}
 <nav class="navbar {{ self.type }} {% if self.expand %}navbar-expand-{{ self.expand }}{% endif %} {% for block in self.style %}{% include_block block %} {% endfor %}">
   <a class="navbar-brand" href="#">
-  {% if page.logo %}
-  {% image page.logo fill-200x80 as logo %}
-    <img src="{{ logo.url }}">
+  {% if self.brandname %}
+  {% for block in self.brandname %}
+      {% include_block block %}
+  {% endfor %}
   {% else %}
   {{ page.title }}
   {% endif %}

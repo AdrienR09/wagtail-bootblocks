@@ -3,6 +3,10 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block extra_css %}
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
 {% if self.theme_label %}
 <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/{{ self.theme_label }}/bootstrap.min.css">
 {% endif %}
@@ -20,6 +24,8 @@
 
 
 {% block extra_js %}
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
 $(function () {
   $('[data-toggle="popover"]').popover()

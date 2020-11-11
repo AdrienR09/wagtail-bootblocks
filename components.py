@@ -80,6 +80,7 @@ class ImageBlock(blocks.StructBlock):
         ("1800x800", "1800x800"),
         ("2000x800", "2000x800"),
         ("1700x1700", "1700x1700"),
+        ("2000x170", "2000x170"),
     ]
 
     image = ImageChooserBlock(required=False, closed=True)
@@ -143,6 +144,7 @@ class LinkBlock(blocks.StructBlock):
         ("paragraph", RichTextBlock(required=False, closed=True)),
         ("quote", QuoteBlock(required=False, closed=True)),
         ("text", TextBlock(required=False, closed=True)),
+        ("html", blocks.RawHTMLBlock(required=False, closed=True)),
         ("image", ImageBlock(required=False, closed=True)),
     ], required=False, closed=True)
 
@@ -196,13 +198,17 @@ class NavbarBlock(blocks.StructBlock):
                 ("navbar-light", "Light"),
                 ("navbar-dark", "Dark"),
     ], required=False, closed=True)
+    brandname = blocks.StreamBlock([
+        ("logo", ImageBlock(required=False, closed=True)),
+        ("title", TitleBlock(required=False, closed=True)),
+    ], required=False, closed=True)
     nav = blocks.StreamBlock([
         ("nav", NavBlock(required=False, closed=True)),
         ("button", ButtonBlock(required=False, closed=True)),
         ("dropdown", ButtonBlock(required=False, closed=True)),
         ("text", RichTextBlock(required=False, closed=True)),
     ], required=False, closed=True)
-    expand = BreakpointChooserBlock()
+    expand = BreakpointChooserBlock(required=False, closed=True)
     style = NavbarStyleBlock(required=False, closed=True)
 
     class Meta:
@@ -297,6 +303,7 @@ class ListBlock(blocks.StructBlock):
                 ("title", TitleBlock(required=False, closed=True)),
                 ("paragraph", RichTextBlock(required=False, closed=True)),
                 ("quote", QuoteBlock(required=False, closed=True)),
+                ("link", LinkBlock(required=False, closed=True)),
                 ("html", blocks.RawHTMLBlock(required=False, closed=True)),
                 ("image", ImageBlock(required=False, closed=True)),
                 ("button", ButtonBlock(required=False, closed=True)),

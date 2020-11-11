@@ -31,5 +31,9 @@
 {% image self.image fill-400x800 as img %}
 {% elif self.dimensions == "1700x1700" %}
 {% image self.image fill-1700x1700 as img %}
+{% elif self.dimensions == "2000x170" %}
+{% image self.image fill-2000x170 as img %}
+{% else %}
+{% image self.image fill-175x70 as img %}
 {% endif %}
 <img src="{{ img.url }}" class="img-fluid {% for block in self.style %}{% include_block block %} {% endfor %}">
