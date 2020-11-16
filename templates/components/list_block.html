@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 {% if self.active %}
-<div class="list-group {% for block in self.style %}{% include_block block %} {% endfor %}">
+<div {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} list-group {% for block in self.style %}{% include_block block %} {% endfor %}">
   {% for row in self.rows %}
   <a href="#" class="list-group-item list-group-item-action {{ row.active }} {% for block in row.style %}{% include_block block %} {% endfor %}">
     {% for block in row.content %}
@@ -10,7 +10,7 @@
   {% endfor %}
 </div>
 {% else %}
-<ul class="list-group {% for block in self.style %}{% include_block block %} {% endfor %}">
+<ul {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} list-group {% for block in self.style %}{% include_block block %} {% endfor %}">
   {% for row in self.rows %}
   <li class="list-group-item {% for block in row.style %}{% include_block block %} {% endfor %}">
     {% for block in row.content %}

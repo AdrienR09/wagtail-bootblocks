@@ -1,1 +1,1 @@
-m{{ self.position }}{% if self.breakpoints %}-{{ self.breakpoints }}{% endif %}-{% if self.size < 0 %}n{{ self.size|cut:"-" }}{% else %}{{ self.size }}{% endif %}
+m{{ self.position }}{% if self.breakpoints %}-{{ self.breakpoints }}{% endif %}-{{ self.size }}

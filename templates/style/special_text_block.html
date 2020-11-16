@@ -1,1 +1,1 @@
-{{ self.special_text}} {% if self.special_text == "badge" %}badge-{% else %}alert-{% endif %}{{ self.color }}
+{{ self.special_text}} {% if self.color %}{{ self.special_text}}-{{ self.color }}{% endif %}}

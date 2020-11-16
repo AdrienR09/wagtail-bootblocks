@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<main class="container {% for block in self.style %}{% include_block block %} {% endfor %}">
+<main {% for block in self.parameters %}{% include_block block %} {% endfor %} class="container {% for block in self.style %}{% include_block block %} {% endfor %}">
 {% for block in self.content %}
 {% include_block block %}
 {% endfor %}

@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<a {{ param }} class="{{ class }}" href= "{% if self.url %}{{ self.url }}{% else %}{{ ref }}{% endif %}">
+<a {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} btn {% for block in self.style %}{% include_block block %} {% endfor %}" href= "{% if self.url %}{{ self.url }}{% else %}{{ ref }}{% endif %}">
     {% for block in self.content %}
     {% include_block block with class='' %}
     {% endfor %}

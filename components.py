@@ -10,18 +10,19 @@ from bootblocks.style import *
 
 class TitleBlock(blocks.StructBlock):
 
-    choices = [
+    title = blocks.CharBlock(required=False, closed=True)
+    level = blocks.ChoiceBlock(choices= [
         ("p", "standard"),
         ("h1", "H1"),
         ("h2", "H2"),
         ("h3", "H3"),
         ("h4", "H4"),
         ("h5", "H5"),
-    ]
-
-    title = blocks.CharBlock(max_length=100, required=False, closed=True)
-    level = blocks.ChoiceBlock(choices=choices, required=False, closed=True)
-    style = TextStyleBlock(closed=True, required=False)
+    ], required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(closed=True, required=False)
 
     class Meta:
         template = "components/title_block.html"
@@ -31,20 +32,26 @@ class TitleBlock(blocks.StructBlock):
 class TextBlock(blocks.StructBlock):
 
     text = blocks.TextBlock(required=False, closed=True)
-    style = TextStyleBlock(closed=True, required=False)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(closed=True, required=False)
 
     class Meta:
-        template = "components/richtext_block.html"
+        template = "components/text_block.html"
         icon = "pilcrow"
         group = "Text"
 
 class RichTextBlock(blocks.StructBlock):
 
     text = blocks.RichTextBlock(required=False, closed=True)
-    style = TextStyleBlock(closed=True, required=False)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(closed=True, required=False)
 
     class Meta:
-        template = "components/richtext_block.html"
+        template = "components/text_block.html"
         icon = "pilcrow"
         group = "Text"
 
@@ -52,7 +59,10 @@ class QuoteBlock(blocks.StructBlock):
 
     quote = blocks.RichTextBlock(required=False, closed=True)
     author = blocks.CharBlock(max_length=200, required=False, closed=True)
-    style = TextStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/quote_block.html"
@@ -79,13 +89,14 @@ class ImageBlock(blocks.StructBlock):
         ("1510x600", "1510x600"),
         ("1800x800", "1800x800"),
         ("2000x800", "2000x800"),
-        ("1700x1700", "1700x1700"),
-        ("2000x170", "2000x170"),
     ]
 
     image = ImageChooserBlock(required=False, closed=True)
     dimensions = blocks.ChoiceBlock(choices=choices, closed=True, required=False)
-    style = ImageStyleBlock(closed=True, required=False)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/image_block.html"
@@ -106,10 +117,10 @@ class TooltipBlock(blocks.StructBlock):
 class LinkStructValue(blocks.StructValue):
 
     def url(self):
-        page = self.get('blocks')
+        page = self.get('page')
         link = self.get('link')
         if page:
-            return page
+            return page.url
         elif link:
             return link
         else:
@@ -119,15 +130,12 @@ class ButtonBlock(blocks.StructBlock):
 
     page = blocks.PageChooserBlock(required=False, closed=True)
     link = blocks.CharBlock(required=False, closed=True)
-    content = blocks.StreamBlock([
-        ("title", TitleBlock(required=False, closed=True)),
-        ("paragraph", RichTextBlock(required=False, closed=True)),
-        ("quote", QuoteBlock(required=False, closed=True)),
-        ("text", TextBlock(required=False, closed=True)),
-        ("image", ImageBlock(required=False, closed=True)),
-    ], required=False, closed=True)
+    content = TitleBlock(required=False, closed=True)
     tooltip = TooltipBlock(required=False, closed=True)
-    style = ButtonStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/button_block.html"
@@ -147,6 +155,10 @@ class LinkBlock(blocks.StructBlock):
         ("html", blocks.RawHTMLBlock(required=False, closed=True)),
         ("image", ImageBlock(required=False, closed=True)),
     ], required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/link_block.html"
@@ -155,7 +167,15 @@ class LinkBlock(blocks.StructBlock):
         group = "Form"
 
 class FormBlock(blocks.StructBlock):
-    pass
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+    ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
+    class Meta:
+        template = "components/form_block.html"
+        icon = "form"
+        value_class = LinkStructValue
+        group = "Form"
 
 # Nav components :
 
@@ -166,6 +186,8 @@ class DropdownButtonBlock(blocks.StructBlock):
         ("link", LinkBlock(required=False, closed=True)),
         ("divider", blocks.StaticBlock(required=False, closed=True)),
     ], required=False, closed=True)
+    parameters = blocks.RawHTMLBlock(required=False, closed=True)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/dropdown_button_block.html"
@@ -184,7 +206,10 @@ class NavBlock(blocks.StructBlock):
         ("link", LinkBlock(required=False, closed=True)),
         ("dropdown", DropdownButtonBlock(required=False, closed=True)),
     ], required=False, closed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/nav_block.html"
@@ -209,7 +234,10 @@ class NavbarBlock(blocks.StructBlock):
         ("text", RichTextBlock(required=False, closed=True)),
     ], required=False, closed=True)
     expand = BreakpointChooserBlock(required=False, closed=True)
-    style = NavbarStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/navbar_block.html"
@@ -219,7 +247,7 @@ class NavbarBlock(blocks.StructBlock):
 
 class PopoverBlock(blocks.StructBlock):
 
-    name = TitleBlock(required=False, closed=True)
+    button = ButtonBlock(required=False, closed=True)
     title = blocks.TextBlock(required=False, closed=True)
     text = blocks.TextBlock(required=False, closed=True)
     placement = blocks.ChoiceBlock(choices = [
@@ -227,7 +255,6 @@ class PopoverBlock(blocks.StructBlock):
         ("right", "right"),
         ("bottom", "bottom"),
         ("top", "top")], required=True, closed=True)
-    style = ButtonStyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/popover_block.html"
@@ -242,9 +269,6 @@ class TableBlock(blocks.StructBlock):
         template = "components/table_block.html"
         icon = "list-ol"
 
-class AlertBlock(blocks.StructBlock):
-    pass
-
 class ButtonGroupBlock(blocks.StructBlock):
 
     type = blocks.ChoiceBlock(choices = [
@@ -258,8 +282,9 @@ class ButtonGroupBlock(blocks.StructBlock):
     content = blocks.StreamBlock([
         ("button", ButtonBlock(required=False, closed=True)),
         ("dropdown", DropdownButtonBlock(required=False, closed=True)),
+        ("popover", PopoverBlock(required=False, closed=True)),
     ], required=False, colsed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/button_group_block.html"
@@ -270,7 +295,6 @@ class ButtonGroupBlock(blocks.StructBlock):
 
 class TabBlock(blocks.StructBlock):
 
-    style = LayoutStyleBlock(required=False, closed=True)
     nav = blocks.StreamBlock([
         ("tab", blocks.StructBlock([
             ("label", TitleBlock(required=True, closed=True)),
@@ -286,7 +310,10 @@ class TabBlock(blocks.StructBlock):
             ], required=False, closed=True))
         ], required=False, closed=True)),
     ], required=False, closed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "components/tab_block.html"
@@ -295,10 +322,9 @@ class TabBlock(blocks.StructBlock):
 
 class ListBlock(blocks.StructBlock):
 
-    style = LayoutStyleBlock(required=False, closed=True)
     rows = blocks.ListBlock(
         blocks.StructBlock([
-            ("style", LayoutStyleBlock(required=False, closed=True)),
+            ("style", StyleBlock(required=False, closed=True)),
             ("content", blocks.StreamBlock([
                 ("title", TitleBlock(required=False, closed=True)),
                 ("paragraph", RichTextBlock(required=False, closed=True)),
@@ -310,6 +336,10 @@ class ListBlock(blocks.StructBlock):
             ], required=False, closed=True)),
         ], required=False, closed=True)
     )
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         icon = "list-ul"
@@ -318,10 +348,9 @@ class ListBlock(blocks.StructBlock):
 
 class CardBlock(blocks.StructBlock):
 
-    style = LayoutStyleBlock(required=False, closed=True)
-    header = TitleBlock(required=False, closed=True)
-    card_image = ImageBlock(required=False, closed=True)
     content = blocks.StreamBlock([
+        ("header", TitleBlock(required=False, closed=True)),
+        ("image_card", ImageBlock(required=False, closed=True)),
         ("title", TitleBlock(required=False, closed=True)),
         ("subtitle", TitleBlock(required=False, closed=True)),
         ("paragraph", RichTextBlock(required=False, closed=True)),
@@ -329,8 +358,12 @@ class CardBlock(blocks.StructBlock):
         ("html", blocks.RawHTMLBlock(required=False, closed=True)),
         ("image", ImageBlock(required=False, closed=True)),
         ("button", ButtonBlock(required=False, closed=True)),
+        ("footer", TitleBlock(required=False, closed=True))
     ], required=False, closed=True)
-    footer = TitleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         icon = "image"
@@ -339,15 +372,7 @@ class CardBlock(blocks.StructBlock):
 
 class LayoutBlock3(blocks.StructBlock):
 
-    container_type = blocks.ChoiceBlock([
-        ("", "Div"),
-        ("jumbotron", "Jumbotron"),
-        ("row", "Row"),
-    ], required=False)
-    dimensions = DimensionBlock(required=False, closed=True)
     background = ImageChooserBlock(required=False, closed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
-
     content = blocks.StreamBlock([
         ("title", TitleBlock(required=False, closed=True)),
         ("paragraph", RichTextBlock(required=False, closed=True)),
@@ -356,6 +381,10 @@ class LayoutBlock3(blocks.StructBlock):
         ("image", ImageBlock(required=False, closed=True)),
         ("button", ButtonBlock(required=False, closed=True)),
     ], required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         icon = "grip"
@@ -364,15 +393,7 @@ class LayoutBlock3(blocks.StructBlock):
 
 class LayoutBlock2(blocks.StructBlock):
 
-    container_type = blocks.ChoiceBlock([
-        ("", "Div"),
-        ("jumbotron", "Jumbotron"),
-        ("row", "Row"),
-    ], required=False)
-    dimensions = DimensionBlock(required=False, closed=True)
     background = ImageChooserBlock(required=False, closed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
-
     content = blocks.StreamBlock([
         ("title", TitleBlock(required=False, closed=True)),
         ("paragraph", RichTextBlock(required=False, closed=True)),
@@ -382,6 +403,10 @@ class LayoutBlock2(blocks.StructBlock):
         ("button", ButtonBlock(required=False, closed=True)),
         ("layout", LayoutBlock3(required=False, closed=True)),
     ], required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         icon = "grip"
@@ -390,15 +415,7 @@ class LayoutBlock2(blocks.StructBlock):
 
 class LayoutBlock(blocks.StructBlock):
 
-    container_type = blocks.ChoiceBlock([
-        ("", "Div"),
-        ("jumbotron", "Jumbotron"),
-        ("row", "Row"),
-    ], required=False)
-    dimensions = DimensionBlock(required=False, closed=True)
     background = ImageChooserBlock(required=False, closed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
-
     content = blocks.StreamBlock([
         ("title", TitleBlock(required=False, closed=True)),
         ("paragraph", RichTextBlock(required=False, closed=True)),
@@ -408,6 +425,10 @@ class LayoutBlock(blocks.StructBlock):
         ("button", ButtonBlock(required=False, closed=True)),
         ("layout", LayoutBlock2(required=False, closed=True)),
     ], required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         icon = "grip"
@@ -422,8 +443,10 @@ class CarouselBlock(blocks.StructBlock):
     content = blocks.ListBlock(
         ImageBlock(closed=True),
         required=False, closed=True)
-
-    style = CarouselStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         icon = "order"

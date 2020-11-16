@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<nav class="navbar {{ self.type }} {% if self.expand %}navbar-expand-{{ self.expand }}{% endif %} {% for block in self.style %}{% include_block block %} {% endfor %}">
+<nav {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} navbar {{ self.type }} {% if self.expand %}navbar-expand-{{ self.expand }}{% endif %} {% for block in self.style %}{% include_block block %} {% endfor %}">
   <a class="navbar-brand" href="#">
   {% if self.brandname %}
   {% for block in self.brandname %}

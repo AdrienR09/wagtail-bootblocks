@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<ul {{ param }} class="nav nav-tabs {{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}">
+<ul {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} nav nav-tabs {{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}">
     {% for block in self.nav %}
     {% if block.block_type == "tab" %}
     <li class="nav-item {% if forloop.counter == 1 %}active {% endif %}">

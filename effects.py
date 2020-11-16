@@ -5,7 +5,7 @@ from wagtail.images.blocks import ImageChooserBlock
 
 class ParticlesBlock(blocks.StructBlock):
     
-    component_id = blocks.CharBlock(required=True, closed=True)
+    id = blocks.CharBlock(required=True, closed=True)
 
     class Meta:
         template = "effects/particles_block.html"

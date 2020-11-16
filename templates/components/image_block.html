@@ -1,39 +1,39 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% if self.dimensions == "80x80" %}
-{% image self.image fill-80x80 as img %}
+{% image self.image max-80x80 as img %}
 {% elif self.dimensions == "100x100" %}
-{% image self.image fill-100x100 as img %}
+{% image self.image max-100x100 as img %}
 {% elif self.dimensions == "150x150" %}
-{% image self.image fill-150x150 as img %}
+{% image self.image max-150x150 as img %}
 {% elif self.dimensions == "200x200" %}
-{% image self.image fill-200x200 as img %}
+{% image self.image max-200x200 as img %}
 {% elif self.dimensions == "300x300" %}
-{% image self.image fill-300x300 as img %}
+{% image self.image max-300x300 as img %}
 {% elif self.dimensions == "400x400" %}
-{% image self.image fill-400x400 as img %}
+{% image self.image max-400x400 as img %}
 {% elif self.dimensions == "600x600" %}
-{% image self.image fill-600x600 as img %}
+{% image self.image max-600x600 as img %}
 {% elif self.dimensions == "600x400" %}
-{% image self.image fill-600x400 as img %}
+{% image self.image max-600x400 as img %}
 {% elif self.dimensions == "400x600" %}
-{% image self.image fill-400x600 as img %}
+{% image self.image max-400x600 as img %}
 {% elif self.dimensions == "800x400" %}
-{% image self.image fill-800x400 as img %}
+{% image self.image max-800x400 as img %}
 {% elif self.dimensions == "1200x600" %}
-{% image self.image fill-1200x600 as img %}
+{% image self.image max-1200x600 as img %}
 {% elif self.dimensions == "1510x600" %}
-{% image self.image fill-1510x600 as img %}
+{% image self.image max-1510x600 as img %}
 {% elif self.dimensions == "1800x800" %}
-{% image self.image fill-1800x800 as img %}
+{% image self.image max-1800x800 as img %}
 {% elif self.dimensions == "2000x800" %}
-{% image self.image fill-2000x800 as img %}
+{% image self.image max-2000x800 as img %}
 {% elif self.dimensions == "400x800" %}
-{% image self.image fill-400x800 as img %}
+{% image self.image max-400x800 as img %}
 {% elif self.dimensions == "1700x1700" %}
-{% image self.image fill-1700x1700 as img %}
+{% image self.image max-1700x1700 as img %}
 {% elif self.dimensions == "2000x170" %}
-{% image self.image fill-2000x170 as img %}
+{% image self.image max-2000x170 as img %}
 {% else %}
-{% image self.image fill-175x70 as img %}
+{% image self.image max-1700x1700 as img %}
 {% endif %}
-<img src="{{ img.url }}" class="img-fluid {% for block in self.style %}{% include_block block %} {% endfor %}">
+<img src="{{ img.url }}" {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} img-fluid {% for block in self.style %}{% include_block block %} {% endfor %}">

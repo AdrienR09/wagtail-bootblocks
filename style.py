@@ -89,33 +89,303 @@ class BreakpointChooserBlock(blocks.ChoiceBlock):
     ("lg", "large"),
     ("xl", "extra-large")]
 
+# Layout blocks :
+
+class MarginBlock(blocks.StructBlock):
+    size = blocks.ChoiceBlock(choices=[
+        ("auto", "auto"),
+        ("n5", "-5"),
+        ("n4", "-4"),
+        ("n3", "-3"),
+        ("n2", "-2"),
+        ("n1", "-1"),
+        ("0", "0"),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
+    ], required=False, closed=True)
+    position = PositionChooserBlock(required=False)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "radio-full"
+        template = "style/margin_block.html"
+        group = "dimension"
+
+class PaddingBlock(blocks.StructBlock):
+    size = blocks.ChoiceBlock(choices=[
+        ("auto", "auto"),
+        ("0", "0"),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
+    ], required=False, closed=True)
+    position = PositionChooserBlock(required=False)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "radio-empty"
+        template = "style/padding_block.html"
+        group = "dimension"
+
+class WidthChooserBlock(blocks.ChoiceBlock):
+
+    choices = [
+        ("auto" , "auto"),
+        ("w-25" , "25%"),
+        ("w-50" , "50%"),
+        ("w-75" , "75%"),
+        ("w-100" , "100%"),
+    ]
+
+    class Meta:
+        icon = "arrow-down"
+        group = "dimension"
+
+class HeightChooserBlock(blocks.ChoiceBlock):
+
+    choices = [
+        ("auto" , "auto"),
+        ("h-25" , "25%"),
+        ("h-50" , "50%"),
+        ("h-75" , "75%"),
+        ("h-100" , "100%"),
+    ]
+
+    class Meta:
+        icon = "arrow-up"
+        group = "dimension"
+
+class DimensionBlock(blocks.StructBlock):
+
+    height = blocks.IntegerBlock(min_value=1, max_value=500, required=False)
+    width = blocks.IntegerBlock(min_value=1, max_value=500, required=False)
+
+    class Meta:
+        icon = "arrows-up-down"
+        template = "style/dimension_block.html"
+        group = "dimension"
+
+class PositionChooserBlock(blocks.ChoiceBlock):
+    choices = [
+        ("fixed-left", "fixed-left"),
+        ("fixed-top", "fixed-top"),
+        ("fixed-bottom", "fixed-bottom"),
+        ("fixed-right", "fixed-right"),
+        ("sticky-left", "sticky-left"),
+        ("sticky-top", "sticky-top"),
+        ("sticky-bottom", "sticky-bottom"),
+        ("sticky-right", "sticky-right"),
+    ]
+
+    class Meta:
+        icon = "arrow-left"
+        group = "layout"
+
+class DisplayBlock(blocks.StructBlock):
+    type = blocks.ChoiceBlock(choices=[
+        ("none", "none"),
+        ("inline", "inline"),
+        ("inline-block", "inline-block"),
+        ("block", "block"),
+        ("table", "table"),
+        ("cell", "table-cell"),
+        ("row", "table-row"),
+        ("flex", "flex"),
+        ("inline-flex", "inline-flex"),
+    ], required=True, closed=True)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "spinner"
+        group = "layout"
+        template = "style/display_block.html"
+
+class LayoutChooserBlock(blocks.ChoiceBlock):
+
+    choices =[
+        ("row", "row"),
+        ("container", "container"),
+        ("jumbotron", "jumbotron"),
+    ]
+
+    class Meta:
+        icon = "spinner"
+        group = "layout"
+
+class ColumnsBlock(blocks.StructBlock):
+
+    columns = blocks.IntegerBlock(min_value=0, max_value=12, required=False, closed=True)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "grip"
+        group = "layout"
+        template = "style/column_block.html"
+
+class FlexBlock(blocks.StructBlock):
+    type = blocks.ChoiceBlock(choices=[
+        ("row", "row"),
+        ("row-reverse", "row-reverse"),
+        ("column", "column"),
+        ("column-reverse", "column-reverse"),
+        ("fill", "fill"),
+        ("wrap", "wrap"),
+        ("wrap-reverse", "wrap-reverse"),
+        ("nowrap", "nowrap"),
+    ], required=False, closed=True)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "spinner"
+        group = "layout"
+        template = "style/flex_block.html"
+
+class FloatBlock(blocks.StructBlock):
+    type = blocks.ChoiceBlock(choices=[
+        ("left", "left"),
+        ("right", "right"),
+        ("none", "none"),
+    ], required=False, closed=True)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "spinner"
+        group = "layout"
+        template = "style/float_block.html"
+
+class HorizontalAlignementBlock(blocks.StructBlock):
+
+    alignement = blocks.ChoiceBlock(choices = [
+        ("start", "start"),
+        ("center", "center"),
+        ("end", "end"),
+        ("around", "around"),
+        ("between", "between"),
+    ], required=False, closed=True)
+    breakpoint = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "arrow-right"
+        group = "alignement"
+        template = "style/horizontal_alignement_block.html"
+
+class VerticalAlignementBlock(blocks.StructBlock):
+
+    alignement = blocks.ChoiceBlock(choices = [
+        ("start", "start"),
+        ("center", "center"),
+        ("end", "end"),
+        ("stretch", "stretch"),
+        ("baseline", "baseline"),
+    ], required=False, closed=True)
+    item = blocks.ChoiceBlock(choices = [
+        ("items", "items"),
+        ("self", "self"),
+    ], required=False, closed=True)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "arrow-up"
+        group = "alignement"
+        template = "style/vertical_alignement_block.html"
+
+class TextAlignementBlock(blocks.StructBlock):
+
+    alignement = blocks.ChoiceBlock(choices = [
+        ("left", "left"),
+        ("right", "right"),
+        ("center", "center"),
+        ("justify", "justify"),
+    ], required=False, closed=True)
+    breakpoints = BreakpointChooserBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "horizontalrule"
+        group = "alignement"
+        template = "style/text_alignement_block.html"
+
+class BackgroundColorBlock(blocks.StructBlock):
+
+    background_color = ColorChooserBlock(required=False)
+
+    class Meta:
+        icon = "snippet"
+        template = "style/background_color_block.html"
+        group = "content"
+
+class ShadowSizeBlock(blocks.StructBlock):
+
+    size = SizeChooserBlock(required=False, closed=True)
+    gradient = blocks.BooleanBlock(required=False, closed=True)
+
+    class Meta:
+        icon = "view"
+        template = "style/shadow_size_block.html"
+        group = "content"
+
+class BorderBlock(blocks.StructBlock):
+
+    border_style = blocks.ChoiceBlock(choices = [
+        ("border-0", "no border"),
+        ("border", "border"),
+        ("border-top", "border-top"),
+        ("border-bottom", "border-bottom"),
+        ("border-left", "border-left"),
+        ("border-right", "border-right"),
+        ("border-top-0", "no border-top"),
+        ("border-bottom-0", "no border-bottom"),
+        ("border-left-0", "no border-left"),
+        ("border-right-0", "no border-right"),
+    ], required=False, closed=True)
+    border_shape = blocks.ChoiceBlock(choices = [
+        ("rounded-0", "rounded-0"),
+        ("rounded", "rounded"),
+        ("rounded-top", "rounded-top"),
+        ("rounded-bottom", "rounded-bottom"),
+        ("rounded-left", "rounded-left"),
+        ("rounded-right", "rounded-right"),
+        ("rounded-circle", "rounded-circle"),
+        ("rounded-pill", "rounded-pill"),
+    ], required=False, closed=True)
+    border_color = ColorChooserBlock(required=False)
+
+    class Meta:
+        icon = "placeholder"
+        template = "style/border_block.html"
+        group = "content"
+
 # Text blocks :
 
 class FontChooserBlock(blocks.ChoiceBlock):
 
-    DEFAULT = "default"
-    FIRST = "first-font"
-    SECOND = "second-font"
-    THIRD = "third-font"
-
     choices = [
-        (DEFAULT, "default"),
-        (FIRST, "first-font"),
-        (SECOND, "second-font"),
-        (THIRD, "third-font"),
+        ("first-font", "first-font"),
+        ("second-font", "second-font"),
+        ("third-font", "third-font"),
     ]
 
     class Meta:
         icon = "pilcrow"
         group = "text"
 
-class TextSizeBlock(blocks.StructBlock):
-
-    size = blocks.IntegerBlock(min_value=1, max_value=6)
+class TextSizeBlock(blocks.ChoiceBlock):
+    
+    choices = [
+        ("display-1", "display-1"),
+        ("display-2", "display-2"),
+        ("display-3", "display-3"),
+        ("display-4", "display-4"),
+        ("display-5", "display-5"),
+        ("display-6", "display-6"),
+    ]
 
     class Meta:
         icon = "arrows-up-down"
-        template = "style/text_size_block.html"
         group = "text"
 
 class TextColorBlock(blocks.StructBlock):
@@ -129,31 +399,29 @@ class TextColorBlock(blocks.StructBlock):
 
 class TextOverflowChooserBlock(blocks.ChoiceBlock):
 
-    BREAK = "text-break"
-    TRUNCATE = "text-truncate"
-    WRAP = "text-wrap"
-    NOWRAP = "text-nowrap"
-
     choices = [
-        (BREAK, "break"),
-        (TRUNCATE, "truncate"),
-        (WRAP, "wrap"),
-        (NOWRAP, "nowrap"),
+        ("text-break", "break"),
+        ("text-truncate", "truncate"),
+        ("text-wrap", "wrap"),
+        ("text-nowrap", "nowrap"),
     ]
 
     class Meta:
         icon = "redirect"
         group = "text"
 
-class BadgeBlock(blocks.StructBlock):
+class SpecialTextBlock(blocks.StructBlock):
 
-    color = ColorChooserBlock(required=False, closed=True)
-    pill = blocks.BooleanBlock(required=False, closed=True)
+    type = blocks.ChoiceBlock(choices=[
+        ("alert", "alert"),
+        ("badge", "badge"),
+    ], required=True, closed=True)
+    color = ColorChooserBlock(required=True, closed=True)
 
     class Meta:
-        template = "style/badge_block.html"
+        icon = "pick"
         group = "text"
-        label = "badge"
+        template = "style/special_text_block.html"
 
 # Button blocks :
 
@@ -176,281 +444,7 @@ class ButtonSizeBlock(blocks.StructBlock):
         template = "style/button_size_block.html"
         group = "button"
 
-# Image blocks :
-
-class ImageDimensionsChooser(blocks.ChoiceBlock):
-
-    choices = [
-        ("80x80","80x80"),
-        ("100x100","100x100"),
-        ("150x150","150x150"),
-        ("200x200","200x200"),
-        ("300x300","300x300"),
-        ("400x400","400x400"),
-        ("600x600","600x600"),
-        ("600x400","600x400"),
-        ("800x400","800x400"),
-    ]
-
-    class Meta:
-        group = "image"
-
-# Content blocks :
-
-class BackgroundColorBlock(blocks.StructBlock):
-
-    background_color = ColorChooserBlock(required=False)
-
-    class Meta:
-        icon = "snippet"
-        template = "style/background_color_block.html"
-        group = "content"
-
-class TextAlignementBlock(blocks.StructBlock):
-
-    alignement = blocks.ChoiceBlock(choices = [
-        ("left", "left"),
-        ("right", "right"),
-        ("center", "center"),
-        ("justify", "justify"),
-    ], required=False, closed=True)
-    breakpoints = BreakpointChooserBlock(required=False, closed=True)
-
-    class Meta:
-        icon = "horizontalrule"
-        group = "content"
-        template = "style/text_alignement_block.html"
-
-class HorizontalAlignementBlock(blocks.StructBlock):
-
-    alignement = blocks.ChoiceBlock(choices = [
-        ("start", "start"),
-        ("center", "center"),
-        ("end", "end"),
-        ("around", "around"),
-        ("between", "between"),
-    ], required=False, closed=True)
-    breakpoint = BreakpointChooserBlock(required=False, closed=True)
-
-    class Meta:
-        icon = "arrow-right"
-        group = "content"
-        template = "style/horizontal_alignement_block.html"
-
-class VerticalAlignementBlock(blocks.StructBlock):
-
-    alignement = blocks.ChoiceBlock(choices = [
-        ("start", "start"),
-        ("center", "center"),
-        ("end", "end"),
-    ], required=False, closed=True)
-    breakpoints = BreakpointChooserBlock(required=False, closed=True)
-
-    class Meta:
-        icon = "arrow-up"
-        group = "content"
-        template = "style/vertical_alignement_block.html"
-
-# Box blocks :
-
-class MarginBlock(blocks.StructBlock):
-
-    size = blocks.IntegerBlock(min_value=-5, max_value=5)
-    position = PositionChooserBlock(required=False)
-    breakpoints = BreakpointChooserBlock(required=False, closed=True)
-
-    class Meta:
-        icon = "radio-full"
-        template = "style/margin_block.html"
-        group = "box"
-
-class PaddingBlock(blocks.StructBlock):
-
-    size = blocks.IntegerBlock(min_value=0, max_value=5)
-    position = PositionChooserBlock(required=False)
-    breakpoints = BreakpointChooserBlock(required=False, closed=True)
-
-    class Meta:
-        icon = "radio-empty"
-        template = "style/padding_block.html"
-        group = "box"
-
-class SizeWidthChooserBlock(blocks.ChoiceBlock):
-
-    AUTO = "auto"
-    W25 = "w-25"
-    W50 = "w-50"
-    W75 = "w-75"
-    W100 = "w-100"
-
-    choices = [
-        (AUTO , "auto"),
-        (W25 , "25%"),
-        (W50 , "50%"),
-        (W75 , "75%"),
-        (W100 , "100%"),
-    ]
-
-    class Meta:
-        icon = "arrow-down"
-        group = "box"
-
-class SizeHeightChooserBlock(blocks.ChoiceBlock):
-
-    AUTO = "auto"
-    H25 = "h-25"
-    H50 = "h-50"
-    H75 = "h-75"
-    H100 = "h-100"
-
-    choices = [
-        (AUTO , "auto"),
-        (H25 , "25%"),
-        (H50 , "50%"),
-        (H75 , "75%"),
-        (H100 , "100%"),
-    ]
-
-    class Meta:
-        icon = "arrow-up"
-        group = "box"
-
-class ColumnsBlock(blocks.StructBlock):
-
-    columns = blocks.IntegerBlock(min_value=0, max_value=12, required=False, closed=True)
-    breakpoints = BreakpointChooserBlock(required=False, closed=True)
-
-    class Meta:
-        icon = "grip"
-        group = "box"
-        template = "style/column_block.html"
-
-class DisplayChooserBlock(blocks.ChoiceBlock):
-
-    NONE = "d-none"
-    INLINE = "d-inline"
-    INLINE_BLOCK = "d-inline-block"
-    BLOCK = "d-block"
-    TABLE = "d-table"
-    TABLE_CELL = "d-table-cell"
-    TABLE_ROW = "d-table-row"
-    FLEX = "d-flex"
-    FLEX_COLUMN = "flex-column"
-    INLINE_FLEX = "d-inline-flex"
-    FLOAT_LEFT = "float-left"
-    FLOAT_RIGHT = "float-right"
-
-    choices = [
-        (NONE , "none"),
-        (INLINE , "inline"),
-        (INLINE_BLOCK , "inline-block"),
-        (BLOCK , "block"),
-        (TABLE , "table"),
-        (TABLE_CELL , "table-cell"),
-        (TABLE_ROW , "table-row"),
-        (FLEX , "flex"),
-        (FLEX_COLUMN , "flex-column"),
-        (INLINE_FLEX , "inline-flex"),
-        (FLOAT_LEFT , "float-left"),
-        (FLOAT_RIGHT , "float-right"),
-    ]
-
-    class Meta:
-        icon = "spinner"
-        group = "box"
-
-class ShadowSizeBlock(blocks.StructBlock):
-
-    size = SizeChooserBlock(required=False)
-
-    class Meta:
-        icon = "view"
-        template = "style/shadow_size_block.html"
-        group = "box"
-
-class DimensionBlock(blocks.StructBlock):
-
-    height = blocks.IntegerBlock(min_value=1, max_value=500, required=False)
-    width = blocks.IntegerBlock(min_value=1, max_value=500, required=False)
-
-    class Meta:
-        icon = "arrows-up-down"
-        template = "style/dimension_block.html"
-        group = "box"
-
-class BorderBlock(blocks.StructBlock):
-
-    BORDER = "border"
-    TOP = "border-top"
-    BOTTOM = "border-bottom"
-    LEFT = "border-left"
-    RIGHT = "border-right"
-    NOBORDER = "border-0"
-    NOTOP = "border-top-0"
-    NOBOTTOM = "border-bottom-0"
-    NOLEFT = "border-left-0"
-    NORIGHT = "border-right-0"
-
-    NONE = "rounded-0"
-    ROUNDED = "rounded"
-    TOP = "rounded-top"
-    BOTTOM = "rounded-bottom"
-    LEFT = "rounded-left"
-    RIGHT = "rounded-right"
-    CIRCLE = "rounded-circle"
-    PILL = "rounded-pill"
-
-    border_style = blocks.ChoiceBlock(choices = [
-        (NOBORDER, "no border"),
-        (BORDER, "border"),
-        (TOP, "border-top"),
-        (BOTTOM, "border-bottom"),
-        (LEFT, "border-left"),
-        (RIGHT, "border-right"),
-        (NOTOP, "no border-top"),
-        (NOBOTTOM, "no border-bottom"),
-        (NOLEFT, "no border-left"),
-        (NORIGHT, "no border-right"),
-    ], required=False)
-    border_shape = blocks.ChoiceBlock(choices = [
-        (NONE, "rounded-0"),
-        (ROUNDED, "rounded"),
-        (TOP, "rounded-top"),
-        (BOTTOM, "rounded-bottom"),
-        (LEFT, "rounded-left"),
-        (RIGHT, "rounded-right"),
-        (CIRCLE, "rounded-circle"),
-        (PILL, "rounded-pill"),
-    ], required=False)
-    border_color = ColorChooserBlock(required=False)
-
-    class Meta:
-        icon = "placeholder"
-        template = "style/border_block.html"
-        group = "box"
-
 # Other :
-
-class SpecialTextChooserBlock(blocks.ChoiceBlock):
-
-    ALERT = "alert"
-    ALERT_DIS = "alert alert-dismissible fade show"
-    BADGE = "badge"
-
-    choices = [
-        (ALERT, "alert"),
-        (ALERT_DIS, "alert_dismissible"),
-        (BADGE, "badge"),
-    ]
-
-class SpecialTextBlock(blocks.StructBlock):
-
-    special_text = SpecialTextChooserBlock()
-    color = ColorChooserBlock()
-
-    class Meta:
-        icon = "pick"
-        template = "style/special_text_block.html"
 
 class PaginationSizeBlock(blocks.StructBlock):
 
@@ -458,32 +452,8 @@ class PaginationSizeBlock(blocks.StructBlock):
 
     class Meta:
         icon = "view"
+        group = "special"
         template = "style/button_size_block.html"
-
-class FixedPositionChooserBlock(blocks.ChoiceBlock):
-
-    LEFT = "fixed-left"
-    TOP = "fixed-top"
-    BOTTOM = "fixed-bottom"
-    RIGHT = "fixed-right"
-
-    choices = [
-        (LEFT, "left"),
-        (TOP, "top"),
-        (BOTTOM, "bottom"),
-        (RIGHT, "right"),
-    ]
-
-    class Meta:
-        icon = "arrow-left"
-
-class DisableBlock(blocks.StructBlock):
-
-    disable = blocks.BooleanBlock(required=False)
-
-    class Meta:
-        icon = "tick-inverse"
-        template = "style/disable_block.html"
 
 class AddClassBlock(blocks.StructBlock):
 
@@ -492,6 +462,7 @@ class AddClassBlock(blocks.StructBlock):
     class Meta:
         icon = "code"
         template = "style/add_class_block.html"
+        group = "special"
 
 class AnimationBlock(blocks.StructBlock):
 
@@ -608,150 +579,35 @@ class AnimationBlock(blocks.StructBlock):
 
     class Meta:
         template = "style/animation_block.html"
+        group = "special"
 
 
 # Style blocks :
 
-class LayoutStyleBlock(blocks.StreamBlock):
+class StyleBlock(blocks.StreamBlock):
 
-    # Content :
-    background = BackgroundColorBlock(required=False, closed=True)
+    margin = MarginBlock(required=False, closed=True)
+    padding = PaddingBlock(required=False, closed=True)
+    width = WidthChooserBlock(required=False, closed=True)
+    height = HeightChooserBlock(required=False, closed=True)
+    position = PositionChooserBlock(required=False, closed=True)
+    layout = LayoutChooserBlock(required=False, closed=True)
+    display = DisplayBlock(required=False, closed=True)
+    columns = ColumnsBlock(required=False, closed=True)
+    flex = FlexBlock(required=False, closed=True)
+    floating = FloatBlock(required=False, closed=True)
     text_alignement = TextAlignementBlock(required=False, closed=True)
     horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
     vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
-
-    # Box :
-    margin = MarginBlock(required=False, closed=True)
-    padding = PaddingBlock(required=False, closed=True)
-    width = SizeWidthChooserBlock(required=False, closed=True)
-    height = SizeHeightChooserBlock(required=False, closed=True)
-    columns = ColumnsBlock(required=False, closed=True)
-    display = DisplayChooserBlock(required=False, closed=True)
-    border = BorderBlock(required=False, closed=True)
-    shadow = ShadowSizeBlock(required=False, closed=True)
-
-    # Extra :
-    add_class = AddClassBlock(required=False, closed=True)
-    animation = AnimationBlock(required=False, closed=True)
-
-class NavbarStyleBlock(blocks.StreamBlock):
-
-    # Content :
     background = BackgroundColorBlock(required=False, closed=True)
-    text_alignement = TextAlignementBlock(required=False, closed=True)
-    horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
-    vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
-
-    # Box :
-    margin = MarginBlock(required=False, closed=True)
-    padding = PaddingBlock(required=False, closed=True)
-    width = SizeWidthChooserBlock(required=False, closed=True)
-    height = SizeHeightChooserBlock(required=False, closed=True)
-    columns = ColumnsBlock(required=False, closed=True)
-    display = DisplayChooserBlock(required=False, closed=True)
     border = BorderBlock(required=False, closed=True)
     shadow = ShadowSizeBlock(required=False, closed=True)
-    fixed = FixedPositionChooserBlock(required=False, closed=True)
-
-    # Extra :
-    add_class = AddClassBlock(required=False, closed=True)
-    animation = AnimationBlock(required=False, closed=True)
-
-class TextStyleBlock(blocks.StreamBlock):
-
-    # Text :
     text_color = TextColorBlock(required=False, closed=True)
     text_size = TextSizeBlock(required=False, closed=True)
     font = FontChooserBlock(required=False, closed=True)
     text_overflow = TextOverflowChooserBlock(required=False, closed=True)
-    badge = BadgeBlock(required=False, closed=True)
-
-    # Content :
-    background = BackgroundColorBlock(required=False, closed=True)
-    text_alignement = TextAlignementBlock(required=False, closed=True)
-    horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
-    vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
-    columns = ColumnsBlock(required=False, closed=True)
-    display = DisplayChooserBlock(required=False, closed=True)
-
-    # Box :
-    shadow = ShadowSizeBlock(required=False, closed=True)
-    width = SizeWidthChooserBlock(required=False, closed=True)
-    height = SizeHeightChooserBlock(required=False, closed=True)
-    border = BorderBlock(required=False, closed=True)
-    margin = MarginBlock(required=False, closed=True)
-    padding = PaddingBlock(required=False, closed=True)
-
+    badge = SpecialTextBlock(required=False, closed=True)
+    button_color = ButtonColorBlock(required=False, closed=True)
+    button_size = ButtonSizeBlock(required=False, closed=True)
     add_class = AddClassBlock(required=False, closed=True)
-    animation = AnimationBlock(required=False, closed=True)
-
-    class Meta:
-        icon = "pilcrow"
-
-class ButtonStyleBlock(blocks.StreamBlock):
-
-    disable = DisableBlock(required=False, closed=True)
-    size = ButtonSizeBlock(required=False, closed=True)
-    color = ButtonColorBlock(required=False, closed=True)
-    background = BackgroundColorBlock(required=False, closed=True)
-    font = FontChooserBlock(required=False, closed=True)
-    columns = ColumnsBlock(required=False, closed=True)
-    display = DisplayChooserBlock(required=False, closed=True)
-    add_class = AddClassBlock(required=False, closed=True)
-    shadow = ShadowSizeBlock(required=False, closed=True)
-    width = SizeWidthChooserBlock(required=False, closed=True)
-    height = SizeHeightChooserBlock(required=False, closed=True)
-    border = BorderBlock(required=False, closed=True)
-    margin = MarginBlock(required=False, closed=True)
-    padding = PaddingBlock(required=False, closed=True)
-    horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
-    vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
-    animation = AnimationBlock(required=False, closed=True)
-
-class CarouselStyleBlock(blocks.StreamBlock):
-
-    transitions = blocks.ChoiceBlock(choices=[("carousel-fade", "fade")], required=False, closed=True)
-    columns = ColumnsBlock(required=False, closed=True)
-    add_class = AddClassBlock(required=False, closed=True)
-    horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
-    vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
-    shadow = ShadowSizeBlock(required=False, closed=True)
-    width = SizeWidthChooserBlock(required=False, closed=True)
-    height = SizeHeightChooserBlock(required=False, closed=True)
-    margin = MarginBlock(required=False, closed=True)
-    padding = PaddingBlock(required=False, closed=True)
-    animation = AnimationBlock(required=False, closed=True)
-
-class ImageStyleBlock(blocks.StreamBlock):
-
-    background = BackgroundColorBlock(required=False, closed=True)
-    columns = ColumnsBlock(required=False, closed=True)
-    add_class = AddClassBlock(required=False, closed=True)
-    display = DisplayChooserBlock(required=False, closed=True)
-    horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
-    vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
-    shadow = ShadowSizeBlock(required=False, closed=True)
-    width = SizeWidthChooserBlock(required=False, closed=True)
-    height = SizeHeightChooserBlock(required=False, closed=True)
-    border = BorderBlock(required=False, closed=True)
-    margin = MarginBlock(required=False, closed=True)
-    padding = PaddingBlock(required=False, closed=True)
-    animation = AnimationBlock(required=False, closed=True)
-
-class NavStyleBlock(blocks.StreamBlock):
-
-    size = PaginationSizeBlock(required=False, closed=True)
-    background = BackgroundColorBlock(required=False, closed=True)
-    columns = ColumnsBlock(required=False, closed=True)
-    display = DisplayChooserBlock(required=False, closed=True)
-    add_class = AddClassBlock(required=False, closed=True)
-    horizontal_alignement = HorizontalAlignementBlock(required=False, closed=True)
-    vertical_alignement = VerticalAlignementBlock(required=False, closed=True)
-    shadow = ShadowSizeBlock(required=False, closed=True)
-    fixed_position = FixedPositionChooserBlock(required=False, closed=True)
-    width = SizeWidthChooserBlock(required=False, closed=True)
-    height = SizeHeightChooserBlock(required=False, closed=True)
-    border = BorderBlock(required=False, closed=True)
-    margin = MarginBlock(required=False, closed=True)
-    padding = PaddingBlock(required=False, closed=True)
     animation = AnimationBlock(required=False, closed=True)

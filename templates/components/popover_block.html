@@ -1,2 +1,2 @@
 {% load wagtailcore_tags %}
-<button type="button" {{ param }} class="btn {{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}" title="{{ self.title }}" data-container="body" data-toggle="popover" data-placement="{{ self.placement }}" data-content="{{ self.text }}" data-original-title="{{ self.title }}">{% include_block self.name %}</button>
+{% include_block self.button with params = "title='{{ self.title }}' data-container='body' data-toggle='popover' data-placement='{{ self.placement }}' data-content='{{ self.text }}' data-original-title='{{ self.title }}'" %}

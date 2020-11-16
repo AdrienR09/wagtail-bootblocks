@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<div class="btn-group" role="group">
+<div {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} btn-group {% for block in self.style %}{% include_block block %} {% endfor %}" role="group">
   {% include_block self.button with class="dropdown-toggle" param="data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'" %}
   <div class="dropdown-menu">
   {% for block in self.nav %}

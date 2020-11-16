@@ -11,6 +11,10 @@ class HeaderBlock(blocks.StructBlock):
         ("navbar", NavbarBlock(required=False, closed=True)),
         ("banner", LayoutBlock(required=False, closed=True)),
     ], required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "blocks/header_block.html"
@@ -36,9 +40,12 @@ class ContentBlock(blocks.StructBlock):
         ("list", ListBlock(required=False, closed=True)),
         ("card", CardBlock(required=False, closed=True)),
         ("layout", LayoutBlock(required=False, closed=True)),
-        ("caroussel", CarouselBlock(required=False, closed=True)),
+        ("carousel", CarouselBlock(required=False, closed=True)),
     ], required=False, closed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "blocks/content_block.html"
@@ -66,7 +73,10 @@ class MainBlock(blocks.StructBlock):
         ("section", SectionBlock(required=False, closed=True)),
         ("aside", AsideBlock(required=False, closed=True)),
     ], required=False, closed=True)
-    style = LayoutStyleBlock(required=False, closed=True)
+    parameters = blocks.StreamBlock([
+        ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
+        ], closed=True, required=False)
+    style = StyleBlock(required=False, closed=True)
 
     class Meta:
         template = "blocks/main_block.html"
