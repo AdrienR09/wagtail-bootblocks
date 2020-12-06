@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+<form action="{{ self.url }}" method="post" autocomplete="on">
+    {% csrf_token %}
+  <fieldset>
+        {% for block in self.content %}
+        {% include_block block %}
+        {% endfor %}
+  </fieldset>
+</form>

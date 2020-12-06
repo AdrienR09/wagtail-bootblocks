@@ -2,14 +2,11 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from wagtail.core.models import Page
-from modelcluster.fields import ParentalKey
+from wagtail.utils.decorators import cached_classmethod
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel, InlinePanel, FieldRowPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.core.fields import StreamField, RichTextField
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.admin.edit_handlers import TabbedInterface, ObjectList
 
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.core.blocks import StreamBlock, RawHTMLBlock
 from bootblocks import theme, blocks, effects
 
@@ -52,6 +49,9 @@ class BlockPage(Page):
         blank=True,
     )
 
+    class Meta:
+        abstract = True
+
     theme_panels = Page.content_panels + [
         FieldPanel("theme_label"),
         FieldPanel("extra_theme"),
@@ -65,10 +65,13 @@ class BlockPage(Page):
         StreamFieldPanel("extra_js"),
     ]
 
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading=_("Content")),
-        ObjectList(Page.promote_panels, heading=_("Promote")),
-        ObjectList(Page.settings_panels, heading=_("Settings")),
-        ObjectList(theme_panels, heading=_("Theme")),
-        ObjectList(script_panels, heading=_("Script")),
-    ])
+    @cached_classmethod
+    def get_edit_handler(cls):
+        edit_handler = TabbedInterface([
+            ObjectList(cls.content_panels, heading=_("Content")),
+            ObjectList(Page.promote_panels, heading=_("Promote")),
+            ObjectList(Page.settings_panels, heading=_("Settings")),
+            ObjectList(cls.theme_panels, heading=_("Theme")),
+            ObjectList(cls.script_panels, heading=_("Script")),
+        ])
+        return edit_handler.bind_to(cls)

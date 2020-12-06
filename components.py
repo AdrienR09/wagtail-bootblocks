@@ -5,6 +5,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.table_block.blocks import TableBlock
 
 from bootblocks.style import *
+from bootblocks.forms import *
 
 # Text components :
 
@@ -167,6 +168,16 @@ class LinkBlock(blocks.StructBlock):
         group = "Form"
 
 class FormBlock(blocks.StructBlock):
+
+    page = blocks.PageChooserBlock(required=False, closed=True)
+    link = blocks.CharBlock(required=False, closed=True)
+    content = blocks.StreamBlock([
+        ("input", InputFormBlock(required=False, closed=True)),
+        ("select", SelectFormBlock(required=False, closed=True)),
+        ("textarea", TextAreaFormBlock(required=False, closed=True)),
+        ("legend", LegendBlock(required=False, closed=True)),
+        ("submit", SubmitBlock(required=False, closed=True)),
+    ], required=False, closed=True)
     parameters = blocks.StreamBlock([
         ("parameter", blocks.RawHTMLBlock(closed=True, required=False))
     ], closed=True, required=False)

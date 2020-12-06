@@ -1,0 +1,19 @@
+{% load wagtailcore_tags %}
+{% if self.type == "checkbox" or self.type == "radio" %}
+<fieldset class="form-group {% for block in self.style %}{% include_block block %} {% endfor %}">
+  <div class="form-check">
+    <label class="form-check-label" for="{{ self.name }}">
+      <input {% for block in self.parameters %}{% include_block block %} {% endfor %} type="{{self.type}}" class="form-check-input" name="{{ self.name }}" >
+    {{ self.label }}
+    </label>
+  </div>
+</fieldset>
+{% else %}
+<div class="form-group {% for block in self.style %}{% include_block block %} {% endfor %}">
+<label for="{{ self.name }}">{{ self.label }}</label>
+<input {% for block in self.parameters %}{% include_block block %} {% endfor %} type="{{self.type}}" name="{{ self.name }}" class="form-control" aria-describedby="{{self.name}}Help" placeholder="{{self.value}}">
+</div>
+{% endif %}
+{% if self.info %}
+<small class="form-text text-muted">{{ self.info }}</small>
+{% endif %}

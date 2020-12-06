@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+<div class="form-group {% for block in self.style %}{% include_block block %} {% endfor %}">
+<label for="{{ self.name }}">{{ self.label }}</label>
+<textarea {% for block in self.parameters %}{% include_block block %} {% endfor %} name="{{ self.name }}" class="form-control" aria-describedby="{{self.name}}Help">{{ self.value }}</textarea>
+{% if self.info %}
+<small class="form-text text-muted">{{ self.info }}</small>
+{% endif %}
+</div>
