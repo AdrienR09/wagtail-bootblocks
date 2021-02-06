@@ -17,8 +17,14 @@
 
 
 {% block body %}
-{% for block in self.body %}
-  {% include_block block %}
+{% for block in self.extra_theme %}
+<main>
+{% if block.type != "header" and self.type != "footer" %}
+</main>
+{% include_block block %}
+{% else %}
+{% include_block block %}
+{% endif %}
 {% endfor %}
 {% endblock %}
 

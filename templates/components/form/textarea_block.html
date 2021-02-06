@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+{% include_block self.label with for_label=self.name class="form-check-label"%}
+{% include_block self.block with type=self.type name=self.name text=self.text class="form-control" text=self.text tag="textarea"%}
+
+{% if self.info %}
+{% include_block self.info with tag="small" class="form-text" %}
+{% endif %}

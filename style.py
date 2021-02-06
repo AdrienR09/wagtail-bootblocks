@@ -325,7 +325,7 @@ class ShadowSizeBlock(blocks.StructBlock):
 
     class Meta:
         icon = "view"
-        template = "style/shadow_size_block.html"
+        template = "style/shadow_block.html"
         group = "content"
 
 class BorderBlock(blocks.StructBlock):
@@ -422,6 +422,28 @@ class SpecialTextBlock(blocks.StructBlock):
         icon = "pick"
         group = "text"
         template = "style/special_text_block.html"
+
+class ModalStyleBlock(blocks.StructBlock):
+
+    choices = [
+        ("fade", "fade"),
+        ("scrollable", "modal-dialog-scrollable"),
+        ("centered", "modal-dialog-centered"),
+        ("small", "modal-sm"),
+        ("large", "modal-lg"),
+        ("extra-large", "modal-xl"),
+        ("full-screen", "modal-fullscreen"),
+        ("full-screen-sm", "full-screen-sm-down"),
+        ("full-screen-md", "full-screen-md-down"),
+        ("full-screen-lg", "full-screen-lg-down"),
+        ("full-screen-xl", "full-screen-xl-down"),
+        ("full-screen-xxl", "full-screen-xxl-down"),
+    ]
+
+    class Meta:
+        icon = "pick"
+        group = "container"
+        template = "style/modal_style_block.html"
 
 # Button blocks :
 
@@ -608,6 +630,7 @@ class StyleBlock(blocks.StreamBlock):
     text_overflow = TextOverflowChooserBlock(required=False, closed=True)
     badge = SpecialTextBlock(required=False, closed=True)
     button_color = ButtonColorBlock(required=False, closed=True)
+    modal = ModalStyleBlock(required=False, closed=True)
     button_size = ButtonSizeBlock(required=False, closed=True)
     add_class = AddClassBlock(required=False, closed=True)
     animation = AnimationBlock(required=False, closed=True)

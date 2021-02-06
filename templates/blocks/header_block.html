@@ -1,6 +1,2 @@
 {% load wagtailcore_tags %}
-<header {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{% for block in self.style %}{% include_block block %} {% endfor %}">
-{% for block in self.content %}
-  {% include_block block %}
-{% endfor %}
-</header>
+{% include_block self.block with tag="header" content=self.content %}

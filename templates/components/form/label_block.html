@@ -1,0 +1,4 @@
+{% load wagtailcore_tags %}
+<label for={{ for_label }} {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}">
+    {{ self.text }}
+</label>

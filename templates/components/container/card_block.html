@@ -1,0 +1,20 @@
+{% load wagtailcore_tags %}
+<div {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} modal {% for block in self.style %}{% include_block block %} {% endfor %}" tabindex="-1" aria-hidden="true">
+    {% for block in self.content %}
+        <div class="modal-content">
+        {% if block.block_type == "header" %}
+        {% include_block block with class="card-header" %}
+        {% elif block.block_type == "footer" %}
+        {% include_block block with class="card-footer" %}
+        {% else %}
+        <div class="card-body">
+            {% if block.block_type == "title" %}
+            {% include_block block with class="card-title" %}
+            {% elif block.block_type == "subtitle" %}
+            {% include_block block with class="card-subtitle" %}
+            {% endif %}
+        </div>
+        {% endif %}
+        </div>
+    {% endfor %}
+</div>

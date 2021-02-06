@@ -1,0 +1,6 @@
+{% load wagtailcore_tags %}
+<select {{ params }} name="{{ name }}" {% if multiple %}multiple=""{% endif %} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} form-control {% for block in self.style %}{% include_block block %} {% endfor %}">
+{% for block in options %}
+    <option>{% include_block block %}</option>
+{% endfor %}
+</select>

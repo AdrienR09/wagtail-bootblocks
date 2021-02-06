@@ -1,0 +1,15 @@
+{% load wagtailcore_tags %}
+{% if self.type == "signup" %}
+{% url 'account_signup' as url %}
+{% elif self.type == "login" %}
+{% url 'account_login' as url %}
+{% elif self.type == "password_reset" %}
+{% url 'account_reset_password' as url %}
+{% elif self.type == "logout" %}
+{% url 'account_logout' as url %}
+{% elif self.type == "password_change" %}
+{% url 'account_change_password' as url %}
+{% elif self.type == "confirm_email" %}
+{% url 'account_confirm_email' as url %}
+{% endif %}
+{% include_block self.block with content=self.content url=url method="POST" class=self.type %}

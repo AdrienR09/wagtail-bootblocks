@@ -1,2 +1,0 @@
-{% load wagtailcore_tags %}
-<button type="submit" {% for block in self.parameters %}{% include_block block %} {% endfor %} class="btn {% for block in self.style %}{% include_block block %} {% endfor %}">{{ self.label }}</button>

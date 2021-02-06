@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+{% if url == page.url %}
+{% include_block self.block with content=self.content tag="a" ref=self.url class="nav-link active" %}
+<span class="sr-only">(current)</span>
+{% else %}
+{% include_block self.block with content=self.content tag="a" ref=self.url class="nav-link" %}
+{% endif %}

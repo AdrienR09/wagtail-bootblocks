@@ -1,0 +1,22 @@
+{% load wagtailcore_tags %}
+<div {% for block in self.block.parameters %}{% include_block block %} {% endfor %} class="modal {% for block in self.block.style %}{% include_block block %} {% endfor %}" tabindex="-1" aria-hidden="true" id="coucou">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    {% for block in self.content %}
+    {% if block.block_type == "header" %}
+    {% include_block block with class="modal-header" %}
+    {% elif block.block_type == "body" %}
+    {% include_block block with class="modal-body" %}
+    {% elif block.block_type == "footer" %}
+    {% include_block block with class="modal-footer" %}
+    {% endif %}
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+$("#btn").click(function(){
+$("#coucou").modal("show");
+});
+</script>

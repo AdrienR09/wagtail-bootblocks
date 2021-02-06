@@ -1,0 +1,2 @@
+{% load wagtailcore_tags %}
+<{{tag}} {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} type="{{ type }}" class="{{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}{% for key, error in errors %}{% if key == block.name %} is-invalid{% endif %}{% endfor %}" name="{{ name }}" placeholder="{{ text }}">

@@ -1,0 +1,3 @@
+{% load wagtailcore_tags %}
+{% include_block self.block with content=self.content tag="a" ref=self.url %}
+{% if url == page.url %}<span class="sr-only">(current)</span>{% endif %}

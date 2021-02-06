@@ -1,0 +1,39 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% if dimensions == "80x80" %}
+{% image image max-80x80 as img %}
+{% elif dimensions == "100x100" %}
+{% image image max-100x100 as img %}
+{% elif dimensions == "150x150" %}
+{% image image max-150x150 as img %}
+{% elif dimensions == "200x200" %}
+{% image image max-200x200 as img %}
+{% elif dimensions == "300x300" %}
+{% image image max-300x300 as img %}
+{% elif dimensions == "400x400" %}
+{% image image max-400x400 as img %}
+{% elif dimensions == "600x600" %}
+{% image image max-600x600 as img %}
+{% elif dimensions == "600x400" %}
+{% image image max-600x400 as img %}
+{% elif dimensions == "400x600" %}
+{% image image max-400x600 as img %}
+{% elif dimensions == "800x400" %}
+{% image image max-800x400 as img %}
+{% elif dimensions == "1200x600" %}
+{% image image max-1200x600 as img %}
+{% elif dimensions == "1510x600" %}
+{% image image max-1510x600 as img %}
+{% elif dimensions == "1800x800" %}
+{% image image max-1800x800 as img %}
+{% elif dimensions == "2000x800" %}
+{% image image max-2000x800 as img %}
+{% elif dimensions == "400x800" %}
+{% image image max-400x800 as img %}
+{% elif dimensions == "1700x1700" %}
+{% image image max-1700x1700 as img %}
+{% elif dimensions == "2000x170" %}
+{% image image max-2000x170 as img %}
+{% else %}
+{% image image max-1700x1700 as img %}
+{% endif %}
+<img src="{{ img.url }}" {{ params }} {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}">

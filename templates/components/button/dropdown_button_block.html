@@ -1,0 +1,5 @@
+{% load wagtailcore_tags %}
+<div class="btn-group" role="group">
+  {% include_block self.button with class="dropdown-toggle" param="data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'" only %}
+  {% include_block self.list with class="dropdown-menu" tag=content=self.content only %}
+</div>

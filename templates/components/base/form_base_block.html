@@ -1,0 +1,24 @@
+{% load wagtailcore_tags %}
+<form {{ params }} action="{{ url }}" method="{{ method }}" {% for block in self.parameters %}{% include_block block %} {% endfor %} class="{{ class }} {% for block in self.style %}{% include_block block %} {% endfor %}">
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ crsf_token }}" />
+<fieldset>
+{% for block in content %}
+    <div class="form-group {% for key, error in errors %}{% if key == block.name %}has-danger{% endif %}{% endfor %}">
+
+    {% include_block block with errors=errors only %}
+
+    {% for key, error in errors %}
+    {% if key == block.name %}
+    {% autoescape off %}
+    <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+    {% endautoescape %}
+    {% endif %}
+    {% endfor %}
+
+    {% if errors %}
+    {% include_block self.info with tag="div" class="invalid-feedback" %}
+    {% endif %}
+    </div>
+{% endfor %}
+</fieldset>
+</form>

@@ -6,11 +6,13 @@ from wagtail.utils.decorators import cached_classmethod
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel, InlinePanel, FieldRowPanel
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.admin.edit_handlers import TabbedInterface, ObjectList
-
 from wagtail.core.blocks import StreamBlock, RawHTMLBlock
+
+from mysite.settings import base
 from bootblocks import theme, blocks, effects
 
-class BlockPage(Page):
+
+class AbstractBlockPage(Page):
     """
     Block page models attached to the bootblocks module has a startup page to build faster
     website with streamfield.
@@ -33,8 +35,12 @@ class BlockPage(Page):
     body = StreamField(
         [
             ("header", blocks.HeaderBlock(closed=True)),
-            ("main", blocks.MainBlock(closed=True)),
-            ("footer", blocks.FooterBlock(closed=True)),
+            ("section", blocks.SectionBlock(required=False, closed=True)),
+            ("aside", blocks.AsideBlock(required=False, closed=True)),
+            ("footer", blocks.FooterBlock(required=False, closed=True)),
+
+            ("modal", blocks.ModalBlock(required=False, closed=True)),
+            ("container", blocks.ContainerBlock(required=False, closed=True)),
         ],
         null=True,
         blank=True,
@@ -50,7 +56,7 @@ class BlockPage(Page):
     )
 
     class Meta:
-        abstract = True
+        abstract = False
 
     theme_panels = Page.content_panels + [
         FieldPanel("theme_label"),
@@ -75,3 +81,13 @@ class BlockPage(Page):
             ObjectList(cls.script_panels, heading=_("Script")),
         ])
         return edit_handler.bind_to(cls)
+
+    class Meta:
+        abstract = True
+
+class BlockPage(AbstractBlockPage):
+    """
+    Block page models attached to the bootblocks module has a startup page to build faster
+    website with streamfield.
+    """
+    pass
